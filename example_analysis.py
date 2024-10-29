@@ -7,6 +7,7 @@ import pandas as pd
 from data_loader import DataLoader
 from model import Issue,Event
 import config
+from Analyzer import Analyzer_Class
 
 class ExampleAnalysis:
     """
@@ -42,8 +43,10 @@ class ExampleAnalysis:
         else:
             output += '.'
         print('\n\n'+output+'\n\n')
-        
-
+        #-----------------------BEGIN MY CODE ANALYSIS - JONATHAN JOHNSON-----------------------------------
+        analyzeObj = Analyzer_Class()
+        analyzeObj.issueAnalyzer(issues)
+        #-----------------------END MY CODE ANALYSIS - JONATHAN JOHNSON-----------------------------
         ### BAR CHART
         # Display a graph of the top 50 creators of issues
         top_n:int = 50
