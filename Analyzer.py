@@ -11,48 +11,71 @@ import config
 class Analyzer_Class:
     
     #-----------JONATHAN'S CODE----------------------
-    def issueAnalyzer(self, issues):
+    # CODE TO GET LISTS OF BOTH ISSUE CREATORS AND LABELS AND REMOVE DUPLICATES
+    issuesCreatorList = []
+    labelsAnalyzerList = []  
+    
+    def issue_Analyzer(self, issues):
+        issuesLabelsSet = set()
         issuesCreatorSet = set()
         for i in range(len(issues)):
-            count = 0
             creatorName = issues[i].creator
-            issuesCreatorSet.add(creatorName)  #---gets rid of duplicate creators
+            issuesCreatorSet.add(creatorName)  
             
-        issuesCreatorList = sorted(issuesCreatorSet) #----alphabetizes creators list
-        x = 0 # to iterate over issuesCreatorList
-        count = 0
-        count1 = 0
-        issuesCreatorListLength = len(issuesCreatorList)
-        creatorIssueLabels = 0 #number of issue labels for creator
+        self.issuesCreatorList = sorted(issuesCreatorSet) 
+        issuesCreatorListLength = len(self.issuesCreatorList)
         
+        x = 0        
         while x < issuesCreatorListLength:
-            issueLabels = [] #------list of all labels associated w/ Creators Issues
             for r in range(len(issues)):
-                if(issuesCreatorList[x] == issues[r].creator ):  #  finds all instances of creator
-                    creatorIssueLabels = creatorIssueLabels + len(issues[r].labels) #------NEED TO ADD ALL # OF LABELS
+                if(self.issuesCreatorList[x] == issues[r].creator ):  
                     for h in issues[r].labels:
-                        issueLabels.append(h) #------
-                        
-                    count = count+1
-            #---CODE 1 STARTS HERE       
-            #if(count >37):
-                
-                #print("Issue Creator---" + issuesCreatorList[x] + " ---# of Issues: " + str(count))  # TEST - prints creator and amount of issues submitted 
-                #print("---# of Labels ---" + str(creatorIssueLabels))  # TEST prints number of labels associated w/ each issues submitted by creator
-                #for g in issueLabels:
-                    #count1 =count1 +1
-                    #print("---LABEL #"  + str(count1) +  "--" + g)  #TEST prints labels associated w/ all creator issues and numbers them
-            #---CODE 1 ENDS HERE
-            
-            #---CODE2 STARTS HERE          
-            #print("Issue Creator---" + issuesCreatorList[x] + " ---# of Issues: " + str(count))  # prints creator and amount of issues submitted 
-            #print("---# of Labels ---" + str(creatorIssueLabels))  # prints number of labels associated w/ each issues submitted by creator
-            #for g in issueLabels:
-                #print("---LABEL --" + g)
-            #---CODE2 ENDS HERE
-            creatorIssueLabels = 0
-            count = 0; 
-            count1 = 0;      
+                        issuesLabelsSet.add(h)
             x += 1
-           
+               
+        issuesLabelsList = sorted(issuesLabelsSet) 
+               
+        m = 0
+        event_count = 0
+        while m < len(issuesLabelsList):
+            for x in range(len(issues)): 
+                for r in range(len(issues[x].labels)): 
+                    if(issuesLabelsList[m] == issues[x].labels[r]):
+                        event_count = event_count + len(issues[x].events)
+                        
+            self.labelsAnalyzerList.append(Label_Analyzer(issuesLabelsList[m], event_count))               
+            event_count = 0;
+            m +=1;                
+        
+        numberList:List[int] = []
+        
+        for i in range(len(self.labelsAnalyzerList)):
+            numberList.append(self.labelsAnalyzerList[i].issueLabelContributorAmount)
+                    
+        numberList.sort()
+        numberSet = set(numberList)
+        numberList = sorted(numberSet)
+              
+        for i in range(len(numberList)):
+            for a in range(len(self.labelsAnalyzerList)):
+                if(numberList[i] == self.labelsAnalyzerList[a].issueLabelContributorAmount):
+                    print("Label - " + self.labelsAnalyzerList[a].issueLabelName) 
+                    print("----# of Contributors - " + str(self.labelsAnalyzerList[a].issueLabelContributorAmount))  
+        
+                        
+                
+class Label_Analyzer:
+    
+    issueLabelName:str = None
+    issueLabelContributorAmount:int = 0
+    
+    def __init__(self, name, amount):
+        
+        self.issueLabelName = name
+        self.issueLabelContributorAmount = amount
+    
+    
+    
+    
+               
         #---------END JONATHAN'S CODE--------------

@@ -45,7 +45,7 @@ class ExampleAnalysis:
         print('\n\n'+output+'\n\n')
         #-----------------------BEGIN MY CODE ANALYSIS - JONATHAN JOHNSON-----------------------------------
         analyzeObj = Analyzer_Class()
-        analyzeObj.issueAnalyzer(issues)
+        analyzeObj.issue_Analyzer(issues)
         #-----------------------END MY CODE ANALYSIS - JONATHAN JOHNSON-----------------------------
         ### BAR CHART
         # Display a graph of the top 50 creators of issues
