@@ -12,6 +12,7 @@ class Analyzer_Class:
     
     #-----------JONATHAN'S CODE----------------------
     # CODE TO GET LISTS OF BOTH ISSUE CREATORS AND LABELS AND REMOVE DUPLICATES
+    # PRINTS LIST OF LABELS AND THE # OF CONTRIBUTORS ASSOCIATED W/ THOSE LABELS
     issuesCreatorList = []
     labelsAnalyzerList = []  
     
