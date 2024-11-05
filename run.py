@@ -45,12 +45,14 @@ args = parse_args()
 config.overwrite_from_args(args)
     
 # Run the feature specified in the --feature flag
+#Feature 0 graphs top 50 creators vs their # of issues
+#Feature 1 prints in increasing order name of label and # of contributors associated
 if args.feature == 0:
     ExampleAnalysis().run()
 elif args.feature == 1:
     ExampleAnalysis().run1()
 elif args.feature == 2:
-    pass # TODO call second analysis
+    ExampleAnalysis().run2()
 elif args.feature == 3:
     pass # TODO call third analysis
 else:

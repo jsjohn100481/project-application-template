@@ -61,8 +61,12 @@ class ExampleAnalysis:
         
         issues:List[Issue] = DataLoader().get_issues()
         analyzeObj = Analyzer_Class()
-        analyzeObj.issue_Contributors_Listing(issues)
-                        
+        analyzeObj.issue_Contributors_Listing()
+        
+    def run2(self):
+        issues:List[Issue] = DataLoader().get_issues()
+        analyzeObj = Analyzer_Class()
+        analyzeObj.creator_Issues_Analysis()            
     
 
 if __name__ == '__main__':

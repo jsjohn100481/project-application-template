@@ -15,12 +15,13 @@ class Analyzer_Class:
     # PRINTS LIST OF LABELS AND THE # OF CONTRIBUTORS ASSOCIATED W/ THOSE LABELS
     issuesCreatorList = []
     labelsAnalyzerList = []  
+    issues:List[Issue] = DataLoader().get_issues()
     
-    def issue_Analyzer(self, issues):
+    def issue_Analyzer(self):
         issuesLabelsSet = set()
         issuesCreatorSet = set()
-        for i in range(len(issues)):
-            creatorName = issues[i].creator
+        for i in range(len(self.issues)):
+            creatorName = self.issues[i].creator
             issuesCreatorSet.add(creatorName)  
             
         self.issuesCreatorList = sorted(issuesCreatorSet) 
@@ -28,9 +29,9 @@ class Analyzer_Class:
         
         x = 0        
         while x < issuesCreatorListLength:
-            for r in range(len(issues)):
-                if(self.issuesCreatorList[x] == issues[r].creator ):  
-                    for h in issues[r].labels:
+            for r in range(len(self.issues)):
+                if(self.issuesCreatorList[x] == self.issues[r].creator ):  
+                    for h in self.issues[r].labels:
                         issuesLabelsSet.add(h)
             x += 1
                
@@ -39,20 +40,19 @@ class Analyzer_Class:
         m = 0
         event_count = 0
         while m < len(issuesLabelsList):
-            for x in range(len(issues)): 
-                for r in range(len(issues[x].labels)): 
-                    if(issuesLabelsList[m] == issues[x].labels[r]):
-                        event_count = event_count + len(issues[x].events)
+            for x in range(len(self.issues)): 
+                for r in range(len(self.issues[x].labels)): 
+                    if(issuesLabelsList[m] == self.issues[x].labels[r]):
+                        event_count = event_count + len(self.issues[x].events)
                         
             self.labelsAnalyzerList.append(Label_Analyzer(issuesLabelsList[m], event_count))               
             event_count = 0;
             m +=1;  
             
-        #-----------------------new code-------------------------------------- 
-    def issue_Contributors_Listing(self, issues):    
-        self.issue_Analyzer(issues)
-        #-----------------------new code--------------------------------------                         
+    #feature 1 analysis    
+    def issue_Contributors_Listing(self):    
         
+        self.issue_Analyzer()
         numberList:List[int] = []
         
         for i in range(len(self.labelsAnalyzerList)):
@@ -68,8 +68,22 @@ class Analyzer_Class:
                 if(numberList[i] == self.labelsAnalyzerList[a].issueLabelContributorAmount):
                     print("Label - " + self.labelsAnalyzerList[a].issueLabelName) 
                     print("----# of Contributors - " + str(self.labelsAnalyzerList[a].issueLabelContributorAmount))  
-        
-                        
+    
+    def creator_Issues_Analysis(self):    
+        self.issue_Analyzer()                 
+        creator = input("Enter 'Creator' Name:  ") 
+        for i in range(len(self.issues)):  #scan issues
+            if(creator == self.issues[i].creator): #see if creator is in issues
+                for j in range(len(self.issues[i].labels)):  #scan every issue label for creator
+                    print(creator + " created issue '" + self.issues[i].labels[j] + "' on " + str(self.issues[i].created_date))
+                    for x in range(len(self.issues)):
+                        for r in range(len(self.issues[x].labels)):
+                            if(self.issues[i].labels[j] == self.issues[x].labels[r]):
+                                for s in range(len(self.issues[x].events)):
+                                    if(creator ==self.issues[x].events[s].author):
+                                        print("----Contributed to label '" + self.issues[x].labels[r] + "' created by " + self.issues[x].creator + " on " + str(self.issues[x].events[s].event_date))
+                                        
+         
                 
 class Label_Analyzer:
     
