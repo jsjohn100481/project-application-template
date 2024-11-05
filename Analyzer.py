@@ -46,13 +46,19 @@ class Analyzer_Class:
                         
             self.labelsAnalyzerList.append(Label_Analyzer(issuesLabelsList[m], event_count))               
             event_count = 0;
-            m +=1;                
+            m +=1;  
+            
+        #-----------------------new code-------------------------------------- 
+    def issue_Contributors_Listing(self, issues):    
+        self.issue_Analyzer(issues)
+        #-----------------------new code--------------------------------------                         
         
         numberList:List[int] = []
         
         for i in range(len(self.labelsAnalyzerList)):
             numberList.append(self.labelsAnalyzerList[i].issueLabelContributorAmount)
-                    
+            
+          
         numberList.sort()
         numberSet = set(numberList)
         numberList = sorted(numberSet)
