@@ -54,6 +54,6 @@ elif args.feature == 1:
 elif args.feature == 2:
     ExampleAnalysis().run2()
 elif args.feature == 3:
-    pass # TODO call third analysis
+    ExampleAnalysis().run3()
 else:
     print('Need to specify which feature to run with --feature flag.')

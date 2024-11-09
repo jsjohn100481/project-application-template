@@ -67,7 +67,7 @@ class Analyzer_Class:
             for a in range(len(self.labelsAnalyzerList)):
                 if(numberList[i] == self.labelsAnalyzerList[a].issueLabelContributorAmount):
                     print("Label - " + self.labelsAnalyzerList[a].issueLabelName) 
-                    print("----# of Contributors - " + str(self.labelsAnalyzerList[a].issueLabelContributorAmount))  
+                    print("----# of events - " + str(self.labelsAnalyzerList[a].issueLabelContributorAmount))  
     
     def creator_Issues_Analysis(self):    
         self.issue_Analyzer()                 
@@ -83,8 +83,21 @@ class Analyzer_Class:
                                     if(creator ==self.issues[x].events[s].author):
                                         print("----Contributed to label '" + self.issues[x].labels[r] + "' created by " + self.issues[x].creator + " on " + str(self.issues[x].events[s].event_date))
                                         
-         
-                
+    def label_Comments(self):
+        self.issue_Analyzer()
+        n = 0
+        while n < len(self.labelsAnalyzerList):
+            for r in range(len(self.issues)):
+                for k in range(len(self.issues[r].labels)):
+                    if(self.labelsAnalyzerList[n].issueLabelName == self.issues[r].labels[k]):
+                        for j in range(len(self.issues[r].events)):
+                            if(self.issues[r].events[j].event_type == "commented"):
+                                print(self.issues[r].labels)
+                                print ("----" + self.issues[r].events[j].comment)
+                    
+            n = n + 1
+        
+
 class Label_Analyzer:
     
     issueLabelName:str = None
