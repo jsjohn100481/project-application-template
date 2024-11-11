@@ -43,10 +43,7 @@ class ExampleAnalysis:
         else:
             output += '.'
         print('\n\n'+output+'\n\n')
-        #-----------------------BEGIN MY CODE ANALYSIS - JONATHAN JOHNSON-----------------------------------
-        analyzeObj = Analyzer_Class()
-        analyzeObj.issueAnalyzer(issues)
-        #-----------------------END MY CODE ANALYSIS - JONATHAN JOHNSON-----------------------------
+        
         ### BAR CHART
         # Display a graph of the top 50 creators of issues
         top_n:int = 50
@@ -59,7 +56,22 @@ class ExampleAnalysis:
         df_hist.set_ylabel("# of issues created")
         # Plot the chart
         plt.show() 
-                        
+        
+    def run1(self):
+        
+        issues:List[Issue] = DataLoader().get_issues()
+        analyzeObj = Analyzer_Class()
+        analyzeObj.issue_Contributors_Listing()
+        
+    def run2(self):
+        issues:List[Issue] = DataLoader().get_issues()
+        analyzeObj = Analyzer_Class()
+        analyzeObj.creator_Issues_Analysis()  
+        
+    def run3(self):
+        issues:List[Issue] = DataLoader().get_issues()
+        analyzeObj = Analyzer_Class()
+        analyzeObj.label_Comments()                   
     
 
 if __name__ == '__main__':
