@@ -62,7 +62,7 @@ To make the application easier to debug, runtime configurations are provided to 
 The `.vscode/settings.json` also customizes the VSCode user interface sligthly to make navigation and debugging easier. But that is a matter of preference and can be turned off by removing the appropriate settings.
 
 
-### Examples for runnint Analyzer.py module
+### Examples for running Analyzer.py module
 1. python run.py --feature 1
 
 2. python run.py --feature 2
