@@ -41,21 +41,26 @@ python run.py --feature 0
 
 That will output basic information about the issues to the command line.
 
+Similar to the above instructions, once everthing is set up.  The code can be run using the "python run.py --feature '# of feature' for 1 - 5 analysis .  There are 6 features besides feature 0.  
+--feature 1, utilizes the Analyzer.py module to output a list of all labels and all of the "contributions/events" assoicated with those features.  A graph is also displayed which plots the labels vs "contributions/events"
+
+--feature 2, utilizes the Analyzer.py module to allow for the user to input a number and output issues that are repeated more than the user input to gather feedback as to which issues are more frequently listed.  This feature also allows the user to input a "Creator" name and lists that creators issues and how many times they contributed to their own issues.
+
+--feature 3, utilizes the Analyzer.py module to list all labels and the amount of "comments" that are associated w/ those labels to gather feedback as to which issue labels have an open conversation
+
+--feature 4, utilizes contributor_activity_analysis to analyze contributor activities focusing on interactions with "bug" issues. It identifies top contributors based on their activity 
+
+--feature 5, utilizes contributor_activity_analysis to analyze which issue labels are most active based on comment counts and unique contributor counts.
+
+--feature 6, utilizes contributor_activity_analysis provide activity insights filtered by a specific user and/or label.
+
 
 ## VSCode run configuration
 
 To make the application easier to debug, runtime configurations are provided to run each of the analyses you are implementing. When you click on the run button in the left-hand side toolbar, you can select to run one of the three analyses or run the file you are currently viewing. That makes debugging a little easier. This run configuration is specified in the `.vscode/launch.json` if you want to modify it.
 
 The `.vscode/settings.json` also customizes the VSCode user interface sligthly to make navigation and debugging easier. But that is a matter of preference and can be turned off by removing the appropriate settings.
------------------CODE IMPLENTATION DOCUMENTATION STARTS HERE-------------------------
-Similar to the above instructions, once everthing is set up.  The code can be run using the "python run.py --feature '# of feature' for 1 - 5 analysis .  There are 6 features besides feature 0.  
---feature 1, utilizes the Analyzer.py module to output a list of all labels and all of the "contributions/events" assoicated with those features.  A graph is also displayed which plots the labels vs "contributions/events"
---feature 2, utilizes the Analyzer.py module to allow for the user to input a number and output issues that are repeated more than the user input to gather feedback as to which issues are more frequently listed.  This feature also allows the user to input a "Creator" name and lists that creators issues and how many times they contributed to their own issues.
---feature 3, utilizes the Analyzer.py module to list all labels and the amount of "comments" that are associated w/ those labels to gather feedback as to which issue labels have an open conversation
 
---feature 4, utilizes contributor_activity_analysis to analyze contributor activities focusing on interactions with "bug" issues. It identifies top contributors based on their activity 
---feature 5, utilizes contributor_activity_analysis to analyze which issue labels are most active based on comment counts and unique contributor counts.
---feature 6, utilizes contributor_activity_analysis provide activity insights filtered by a specific user and/or label.
 
 ### Examples for runnint Analyzer.py module
 1. python run.py --feature 1
