@@ -86,28 +86,54 @@ class Analyzer_Class:
         plt.title('List of Issue Labels')
         plt.show()
     
-    #feature 2 analysis        
-    #TAKES A CREATOR AS AN ARGUMENT AND PRINTS THEIR ISSUE LABELS AND THE CREATORS CONTRIBUTIONS TO ALL ISSUES WITH THAT LABEL
-    def creator_Issues_Analysis(self):    
-        self.issue_Analyzer()                 
-        creator = input("Enter 'Creator' Name:  ")
-        creatorName = None 
-        for i in range(len(self.issues)):  #scan issues
-            if(creator == self.issues[i].creator): #see if creator is in issues
-                creatorName = creator
-                for j in range(len(self.issues[i].labels)):  #scan every issue label for creator
-                    print(creator + " created issue '" + self.issues[i].labels[j] + "' on " + str(self.issues[i].created_date))
-                    for x in range(len(self.issues)):
-                        for r in range(len(self.issues[x].labels)):
-                            if(self.issues[i].labels[j] == self.issues[x].labels[r]):
-                                for s in range(len(self.issues[x].events)):
-                                    if(creator == self.issues[x].events[s].author):
-                                        print("----Contributed to label '" + self.issues[x].labels[r] + "' created by " + self.issues[x].creator + " on " + str(self.issues[x].events[s].event_date))
-            elif(creator.upper() == "EXIT"):
+    #feature 2 analysis 
+    #TAKES AN INPUT VALUE AND PRINTS ALL ISSUES THAT ARE REPEATED GREATER THAN THAT VALUE        
+    #TAKES A CREATOR AS AN ARGUMENT AND PRINTS THEIR ISSUE AND THE # OF THEIR CONTRIBUTIONS TO ALL IDENTICAL ISSUES
+    def creator_Issues_Analysis(self):
+        #INPUT VALUE ANALYSIS OF IDENTICAL ISSUES
+        issuesSetList = []  
+        for x in range(len(self.issues)):
+            issuesSetList.append(self.issues[x].labels)
+            #print(self.issues[x].labels)
+        
+        issuesSet = []
+        [issuesSet.append(x) for x in issuesSetList if x not in issuesSet]
+        h = 0
+        instancesOf = input("Enter a number to find instances of issue greater than: ")
+        while h < len(issuesSet):
+            r = 0
+            for x in range(len(self.issues)):
+                if (issuesSet[h] == self.issues[x].labels):
+                    r = r + 1
+            try:        
+                if(r > int(instancesOf)):
+                    print("Issue---" + str(issuesSet[h]))       
+                    print("----# of instances of issue:  " + str(r))
+                else:
+                    pass
+            except:
+                print("Invalid entry please re-enter feature 2")
                 sys.exit()
-        if(creatorName == None):
-           print("Creator does not exist.  Please re-enter Creator or type 'EXIT' to exit feature.")
-           self.creator_Issues_Analysis()
+            h = h+1
+            
+        self.creator_Contribution_Analysis()    
+        
+        #INPUT ANALYSIS OF CREATORS CONTRIBUTION TO CREATORS OWN ISSUES
+    def creator_Contribution_Analysis(self):  
+        self.issue_Analyzer()  
+        try:                   
+            creator = input("Enter 'Creator' Name to view their issues and contributions to that issue:  ")
+            creatorName = None 
+            for i in range(len(self.issues)): 
+                if(creator == self.issues[i].creator): 
+                    creatorName = creator
+                    print(creator + " created issue(s): " + str(self.issues[i].labels))
+                    for j in range(len(self.issues[i].events)): 
+                        if(creator == self.issues[i].events[j].author):
+                            print("-----Contributed to " + str(self.issues[i].labels) + " on " + str(self.issues[i].events[j].event_date))
+        except:
+           print("Invalid entry please re-enter feature 2")
+           
            
     #feature 3 analysis    
     #PRINTS OUT EACH ISSUE LABEL AND THE TOTAL NUMBER OF COMMENTS ASSOCIATED W/ ALL ISSUES WITH THAT LABEL                                   
@@ -124,7 +150,7 @@ class Analyzer_Class:
                         for j in range(len(self.issues[r].events)):
                             if(self.issues[r].events[j].event_type == "commented"):
                                 i = i + 1
-            print ("----Number of comments for label " + str(i))       
+            print ("----Number of comments associated with label " + str(i))       
             n = n + 1
         
 
