@@ -1,5 +1,7 @@
 from collections import defaultdict
 from data_loader import DataLoader
+import pandas as pd
+import matplotlib.pyplot as plt
 
 
 class ContributorActivityAnalysis:
@@ -135,3 +137,74 @@ class ContributorActivityAnalysis:
         )
         for contributor, activity in filtered_activity.items():
             print(f"Contributor: {contributor}, Activity: {activity}")
+
+
+    def visualize_issue_activity(self):
+        """Visualizes the number of issues created over time and per year in one plot with two graphs."""
+        # Load issues data
+        issues = self.data_loader.get_issues()
+
+        # Initialize label counts
+        label_counts = defaultdict(lambda: defaultdict(int))
+
+        # Extract created_date and labels from issues
+        events_data = pd.DataFrame({
+            'created_date': [issue.created_date for issue in issues],
+            'labels': [issue.labels for issue in issues]
+        })
+        
+        # Convert created_date to datetime
+        events_data['created_date'] = pd.to_datetime(events_data['created_date'])
+
+        # Calculate top 3 labels per year
+        for _, row in events_data.iterrows():
+            year = row['created_date'].year
+            for label in row['labels']:
+                label_counts[year][label] += 1
+
+        # Sort and get top 3 labels for each year
+        top_labels_per_year = {
+            year: sorted(counts.items(), key=lambda x: x[1], reverse=True)[:3]
+            for year, counts in label_counts.items()
+        }
+
+        # Prepare data for visualization
+        years = sorted(top_labels_per_year.keys())
+        
+        # Prepare data for stacked bar plot
+        labels_per_year = {year: [label for label, _ in top_labels] for year, top_labels in top_labels_per_year.items()}
+        counts_per_year = {year: [count for _, count in top_labels] for year, top_labels in top_labels_per_year.items()}
+
+        # Create a figure and axis
+        fig, ax = plt.subplots(figsize=(12, 8))
+
+        # Plotting the top 3 labels per year as stacked bars
+        bottom = [0] * len(years)  # Initialize bottom of bars to zero
+        colors = ['#ff9999','#66b3ff','#99ff99']  # Colors for the three labels
+
+        for i in range(3):  # We know we're plotting only the top 3 labels per year
+            values = [counts_per_year[year][i] if i < len(counts_per_year[year]) else 0 for year in years]
+            ax.bar(years, values, bottom=bottom, color=colors[i], label=f'Label {i+1}')
+            bottom = [sum(x) for x in zip(bottom, values)]  # Update bottom to stack bars
+
+        # Set axis titles and legend
+        ax.set_title('Top 3 Labels Count for Each Year')
+        ax.set_xlabel('Year')
+        ax.set_ylabel('Count')
+        
+        # Create a custom legend with actual label names
+        handles, _ = ax.get_legend_handles_labels()
+        
+        legend_labels = []
+        
+        for i in range(3):
+            legend_label = ', '.join([labels_per_year[year][i] if i < len(labels_per_year[year]) else '' for year in years])
+            legend_labels.append(legend_label)
+        
+        ax.legend(handles, legend_labels, title='Top Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
+
+        plt.tight_layout()
+        plt.show()
+
+
+

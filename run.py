@@ -79,5 +79,11 @@ elif args.feature == 6:
         f"{'label: ' + args.label if args.label else ''}"
     )
     contributor_analysis.analyze_filtered_activity(user=args.user, label=args.label)
+elif args.feature == 7:
+    print(
+        f"Visualizing the issue activity for {'user: ' + args.user if args.user else ''} "
+        f"{'label: ' + args.label if args.label else ''}"
+    )
+    contributor_analysis.visualize_issue_activity()
 else:
     print("Error: Please specify a valid feature number with the --feature flag.")
